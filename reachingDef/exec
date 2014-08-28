@@ -1,0 +1,2 @@
+g++ client.cpp irclass.cpp  table.cpp program.cpp basicblock.cpp -o c
+./c
