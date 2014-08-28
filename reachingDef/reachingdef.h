@@ -5,7 +5,7 @@
 #include <list>
 using namespace std;
 class ReachingDefAna{
-    map< string,list<instruction*> > destInstList;
+    map< string,list<instruction*> > dIList;
     public:
     void ComputeDestInstList(Program*);
     ReachingDefAna(){
