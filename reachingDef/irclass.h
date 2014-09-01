@@ -19,7 +19,11 @@ class operand{
     }
     operand(operandtype, string);//symbol register
     operand(operandtype,int); //constant
-    
+    operand* operator=(operand* op){
+        type = op->type;
+        value = op->value;
+        vallabel = op->vallabel;
+    }
     void print_opcode();
     operandtype get_operandtype();
     void set_data(int);
@@ -34,8 +38,8 @@ class BasicBlock;//forward declaring BasicBlock which is defined in basicblock.h
 class instruction{
  
     opcodeenum opcodeno;
-    operand destination;
-    vector< operand > source;
+    operand *destination;
+    vector< operand* > source;
     string label;
     BasicBlock* parent;
     public:
@@ -46,22 +50,22 @@ class instruction{
     void setParent(BasicBlock* bb){
         parent = bb;
     }
-    operand get_source_operand(int);
+    operand* get_source_operand(int);
     int get_source_count();
-    void add_source_operand(operand&);
+    void add_source_operand(operand*);
     void set_opcodeno(opcodeenum);
     opcodeenum get_opcodeno();
-    void set_destination_operand(operand&);
-    operand get_destination_operand();
+    void set_destination_operand(operand*);
+    operand* get_destination_operand();
     string getLabelFromOperand();
     void print_instruction();
     string getLabel(){
         return label;
     }
     bool check_src_operand_correctness(opcodeenum,int);
-    instruction(opcodeenum,operand&);
-    instruction(opcodeenum,operand&,operand&,string = "");
-   instruction(opcodeenum,operand&,operand&,operand&, string = "");
+    instruction(opcodeenum,operand*);
+    instruction(opcodeenum,operand*,operand*,string = "");
+   instruction(opcodeenum,operand*,operand*,operand*, string = "");
    // instruction* createInstruction(opcodeenum,operand&,operand&,operand);
     /*  template <class Copcode,class...Csrc>
         instruction (Copcode opcode,Csrc...src){

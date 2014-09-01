@@ -1,2 +1,2 @@
-g++ client.cpp irclass.cpp  table.cpp program.cpp basicblock.cpp -o c
+g++ client.cpp irclass.cpp  table.cpp program.cpp basicblock.cpp reachingdef.cpp -o c
 ./c

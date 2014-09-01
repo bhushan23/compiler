@@ -69,25 +69,25 @@ void operand :: print_opcode(){
 operandtype operand :: get_operandtype(){
     return type;
 }
-instruction::instruction(opcodeenum opcode,operand &lop){
+instruction::instruction(opcodeenum opcode,operand *lop){
     opcodeno = opcode;
     destination = lop;
 }
-instruction :: instruction(opcodeenum opcode,operand& dest,operand& src,string lab){
+instruction :: instruction(opcodeenum opcode,operand* dest,operand* src,string lab){
     opcodeno=opcode;
     destination=dest;
     label = lab;
     source.push_back(src);
 }
 
-instruction :: instruction(opcodeenum opcode,operand& dest,operand& src1,operand& src2,string lab){
+instruction :: instruction(opcodeenum opcode,operand* dest,operand* src1,operand* src2,string lab){
     opcodeno=opcode;
     destination=dest;
     label = lab;
     source.push_back(src1);
     source.push_back(src2);
 }/*
-instruction* instruction::createInstruction(opcodeenum opcode,operand& dest,operand& src1,operand& src2){
+instruction* instruction::createInstruction(opcodeenum opcode,operand* dest,operand* src1,operand* src2){
     opcodeno=opcode;
     destination=dest;
     source.push_back(src1);
@@ -98,15 +98,15 @@ void instruction :: print_instruction(){
     //if(label.length() > 0)
     //cout << label << ": ";
     cout<<opcode_table_getinst(opcodeno)<<" ";
-    destination.print_opcode();
+    destination->print_opcode();
 
     for(int i=0,size = source.size(); i < size;i++){
         cout<<" ";
-        source[i].print_opcode();
+        source[i]->print_opcode();
     }
 }
 
-operand instruction :: get_source_operand(int i){
+operand* instruction :: get_source_operand(int i){
     if( i >= 0 && i < source.size() )
         return source[i];
     else
@@ -121,16 +121,16 @@ void instruction :: set_opcodeno(opcodeenum i){
 opcodeenum instruction :: get_opcodeno(){
     return opcodeno;
 }
-void instruction :: set_destination_operand(operand& op){
+void instruction :: set_destination_operand(operand* op){
     destination=op;
 }
 
-operand instruction :: get_destination_operand(){
+operand* instruction :: get_destination_operand(){
     return destination;
 }
 
 
-void instruction :: add_source_operand(operand& op){
+void instruction :: add_source_operand(operand* op){
     source.push_back(op);
 }
 int instruction :: get_source_count(){
@@ -147,13 +147,13 @@ string opLabel;
     switch(opcodeno){
         case jmp:
             //if(destination.get_operandtype() == oplabel){//Xcheck if operand is LabelType
-                opLabel = destination.getvalLabel();
+                opLabel = destination->getvalLabel();
            // }
             break;
         case jmpe:
         case jmpne:
         case jmpge:
-            opLabel = source[source.size()-1].getvalLabel();
+            opLabel = source[source.size()-1]->getvalLabel();
             break;
 
         default:
