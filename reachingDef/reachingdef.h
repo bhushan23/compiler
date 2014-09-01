@@ -31,8 +31,11 @@ class ReachingDefAna{
     void ComputeGenKill();
     void printProgram();
     void printBitSet(bitvec&);
+    void printBitSet(bitvec&,ofstream&);
     void printBitSet(string&,bitvec&);
     void ComputeINOUT();
     void printBB(BasicBlock*);
+    void printBB(BasicBlock*,ofstream&);
+    void createDotFile(string&);
 };
 

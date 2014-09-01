@@ -5,6 +5,7 @@
 #include <list>
 #include <map>
 #include <iostream>
+#include <fstream>
 #include "basicblock.h"
 using namespace std;
 enum operandtype{reg=0,sym,con,oplabel};
@@ -25,6 +26,7 @@ class operand{
         vallabel = op->vallabel;
     }
     void print_opcode();
+    void print_opcode(ofstream&);
     operandtype get_operandtype();
     void set_data(int);
     int get_data();
@@ -59,10 +61,12 @@ class instruction{
     operand* get_destination_operand();
     string getLabelFromOperand();
     void print_instruction();
+    void print_instruction(ofstream&);
     string getLabel(){
         return label;
     }
     bool check_src_operand_correctness(opcodeenum,int);
+    
     instruction(opcodeenum,operand*);
     instruction(opcodeenum,operand*,operand*,string = "");
    instruction(opcodeenum,operand*,operand*,operand*, string = "");

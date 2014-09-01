@@ -1,5 +1,8 @@
 #include "reachingdef.h"
 #include <queue>
+#include <iostream>
+#include <ctype.h>
+#include <fstream>
 void ReachingDefAna::ComputeDestInstList(){
 
     for( list<BasicBlock*>::iterator it = pr->get_begin(), end = pr->get_end(); it != end; ++it){
@@ -59,6 +62,8 @@ void ReachingDefAna::ComputeINOUT(){
     BasicBlock* entry = *pr->get_begin();
     bool changed = true;
     int i = 0;
+ string ts("Iteration");
+            
     do{
         queue <BasicBlock*> toVisit;    
         toVisit.push(entry);
@@ -74,17 +79,11 @@ void ReachingDefAna::ComputeINOUT(){
             bitvec out = cBB->getOut();
             bitvec tin(in.getSize()); 
             bitvec tout(out.getSize());
-            //tin.set();
             for(list<BasicBlock*>::iterator pit = cBB->get_begin_pred(), pend = cBB->get_end_pred(); pit != pend; ++pit){
                 tin = tin | (*pit)->getOut();
             }
-            //  cout<<"#IN{";
-            // printBitSet(tin); 
-            tout = tin - cBB->getKill();
+           tout = tin - cBB->getKill();
             tout = tout | cBB->getGen();
-            //  cout<<"\n#OUT{";
-            // printBitSet(tout); 
-
             if( (in == tin) && (out == tout) )
                 changed = false;
             else{
@@ -93,19 +92,33 @@ void ReachingDefAna::ComputeINOUT(){
                 cBB->setOut(tout);
             }
             printBB(cBB);
-        }
+            ts.append("1");
+         }
+   createDotFile(ts);
+        
     }while(changed);
 
 }
 void ReachingDefAna::startReachingDefAna(){
     ComputeDestInstList();
     ComputeGenKill();
-    ComputeINOUT();    
+    ComputeINOUT();
+    string finaldot ("FinalIt");    
+    createDotFile(finaldot);
 }
 void ReachingDefAna::printBitSet(bitvec& bv){
     for(int i = 0; i < bv.getSize(); ++i){
         if(bv[i] == 1){
             bitInstTable[i]->print_instruction();
+            cout<<" ,";        
+        } 
+    }
+}
+
+void ReachingDefAna::printBitSet(bitvec& bv,ofstream& cout){
+    for(int i = 0; i < bv.getSize(); ++i){
+        if(bv[i] == 1){
+            bitInstTable[i]->print_instruction(cout);
             cout<<" ,";        
         } 
     }
@@ -144,6 +157,51 @@ void ReachingDefAna::printBB(BasicBlock* it){
     cout << "\n";
 
 }
+void ReachingDefAna::printBB(BasicBlock* it,ofstream& cout){
+    cout<<"\\lIN:{ ";
+    bitvec in = it->getIn();
+    printBitSet(in,cout);
+    cout<<"\\lOUT:{ ";
+    bitvec out =  it->getOut();
+    printBitSet(out,cout);
+    bitvec gen = it->getGen();
+    bitvec kill = it->getKill(); 
+    cout<<"\\lGEN:{ ";
+    printBitSet(gen,cout);
+    cout<<" }\\lKILL:{ ";
+    printBitSet(kill,cout);  
+    cout<<" }\\l"; 
+
+}
 
 
+void ReachingDefAna::createDotFile(string& name){
+    std::string Filename = "cfg." + name + ".dot";
+    ofstream ost;
+    ost.open(Filename.c_str());
+    BasicBlock* succN;
+    ost <<"digraph \"CFG for " << name << "' function\" {\n label=\"CFG for \";\n";
+    for (list<BasicBlock*>::iterator it = pr->get_begin(), bbie = pr->get_end(); it != bbie; ++it){
+        BasicBlock* BB = *it;
+        ost << "\nNode" << BB << " [shape=record,label=\"{";
+        printBB(BB,ost);
+        for (list<instruction*>::iterator instit = BB->get_begin_inst(), instend = BB->get_end_inst(); instit != instend; ++instit) {
+            ost << "\\l";
+            //it->print_instruction(ost);
+            //ost << (*instit)->get_opcodeno();
+            (*instit)->print_instruction(ost);
+
+        }
+       ost << "}\"];";
+            for (list<BasicBlock*>::iterator SI = BB->get_begin_succ(), E = BB->get_end_succ(); SI != E;  ++SI) {
+                succN = *SI;
+                ost << "\n";
+                ost <<"Node" << BB <<" -> "<<"Node" << succN <<";";
+            }
+        }
+
+
+    ost << "}\n";
+
+}
 

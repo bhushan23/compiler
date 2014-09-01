@@ -65,6 +65,26 @@ void operand :: print_opcode(){
             break;
     };
 }
+void operand :: print_opcode(ofstream& ost){
+    switch(type){
+        case 0://reg
+            ost<<"r"<<value;
+            break;
+        case 1:
+            ost<<get_symbol(value);
+            break;
+        case 2:
+            ost<<value;
+            break;
+        case 3:
+            ost << "label "<<vallabel;
+            break;
+        default:
+            ost<<"..";
+            break;
+    };
+}
+
 
 operandtype operand :: get_operandtype(){
     return type;
@@ -105,6 +125,18 @@ void instruction :: print_instruction(){
         source[i]->print_opcode();
     }
 }
+void instruction :: print_instruction(ofstream& ost){
+    //if(label.length() > 0)
+    //cout << label << ": ";
+    ost<<opcode_table_getinst(opcodeno)<<" ";
+    destination->print_opcode();
+
+    for(int i=0,size = source.size(); i < size;i++){
+        cout<<" ";
+        source[i]->print_opcode(ost);
+    }
+}
+
 
 operand* instruction :: get_source_operand(int i){
     if( i >= 0 && i < source.size() )
