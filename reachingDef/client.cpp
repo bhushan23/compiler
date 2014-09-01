@@ -50,7 +50,7 @@ int main(){
     irs6->set_opcodeno(ld);
     //entryBB->print_instruction();
 
-    program->print_program();
+//    program->print_program();
     ReachingDefAna* ra = new ReachingDefAna(program);
     return 0;
 }

@@ -7,19 +7,20 @@
 #include <iostream>
 using namespace std;
 class ReachingDefAna{
-    
+    Program* pr;
     map< operand*,list<instruction*> > dIList;
    map< instruction* , int > instBitTable;
-    vector<int>  DestV;
+   map<int, instruction*> bitInstTable;
     map <operand*,vector<int> > DestTable;
     public:
-    void ComputeDestInstList(Program*);
+    void ComputeDestInstList();
     ReachingDefAna(){
     }
 
-    void startReachingDefAna(Program*);
+    void startReachingDefAna();
     ReachingDefAna(Program* pr){
-        startReachingDefAna(pr);
+        this->pr = pr;
+        startReachingDefAna();
     }
     bool isDefInst(opcodeenum op){
         if(op >= ld && op <= sub)
@@ -27,5 +28,8 @@ class ReachingDefAna{
         else
             return false;
     }
-
+    void ComputeGenKill();
+    void printProgram();
+    void printBitSet(bitvec&);
 };
+

@@ -23,6 +23,7 @@ void BasicBlock::print_succ(){
 }
 
 void BasicBlock :: print_instruction(){
+     
     for(list <instruction*> :: iterator it=inst.begin();it != inst.end();++it){
         (*it)->print_instruction();
         cout<<"\n";

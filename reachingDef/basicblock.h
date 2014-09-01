@@ -2,15 +2,24 @@
 #define BASICBLOCK_H
 #include <list>
 #include "irclass.h"
+#include "bitbool.h"
 using namespace std;
 class BasicBlock{
     list<instruction*> inst;
     list<BasicBlock*> pred;
     list<BasicBlock*> succ;
+    bitvec in,out,gen,kill;
     string BBLabel;
     public:
     list <instruction*>::iterator get_begin_inst();
     list <instruction*>::iterator get_end_inst();
+    list <instruction*>::reverse_iterator get_rbegin_inst(){
+        return inst.rbegin();
+    }
+    list <instruction*>::reverse_iterator get_rend_inst(){
+        return inst.rend();
+    }
+
     list <BasicBlock*>::iterator get_begin_pred(){
         return pred.begin();
     }
@@ -26,7 +35,7 @@ class BasicBlock{
     void setBBLabel(string& st){
         BBLabel = st;
     }
-   string getBBLabel(){
+    string getBBLabel(){
         return BBLabel;
     }
     void print_pred();
@@ -43,7 +52,39 @@ class BasicBlock{
     }
     int find_lhs(operand&);
     //    list <instruction*>::iterator remove_instruction(  list<instruction*>::iterator );
-    //
+    bool isAlreadyKilled(int start,int end){
+        for(int i = start; i <= end; ++i){
+            if(kill[i] == 1)
+                return false;
+        }
+        return true;
+    }
+    void setGen(int i,int start,int end){
+        gen[i] = 1;
+        for(int i = start; i <= end; ++i){
+            kill[i] = 1;
+        }   
+    }
+    bitvec getGen(){
+       return gen;
+    }
+   bitvec getKill(){
+      return kill;
+   } 
+    void bitResize(int size){
+        in.resize(size);
+        out.resize(size);
+        gen.resize(size);
+        kill.resize(size);
+   }
+    void initBitToZero(int size){
+        for(int i = 0; i < size; ++i){
+            in[i] = 0;
+            out[i] =0;
+            gen[i] = 0;
+            kill[i] =0;
+        }
+    }
 };
 
 #endif
