@@ -63,6 +63,7 @@
             index=nsize-1;
         }
         blocks=nsize;
+        index = nsize;
     }
     void bitvec :: show_bit(){
 
@@ -115,9 +116,23 @@
         }
     return ansbv;
     }
+bitvec bitvec :: operator-(const bitvec& b2){
+        int i;
+        bitvec ansbv= bitvec(blocks);
+        for(i=0;i<index;i++){
+            if(bb[i] && !b2.bb[i])
+                ansbv.bb[i]=1;
+            else
+                ansbv.bb[i]=0;
+        }
+    return ansbv;
+    }
+
 
     bitvec bitvec :: operator|(const bitvec& b2){
         int hsize,i,lindex;
+        index = blocks;
+        
         hsize = index > b2.index ? index : b2.index;
         bitvec ansbv= bitvec(hsize);
         hsize == index? ansbv.index=index : ansbv.index=b2.index;
@@ -188,7 +203,16 @@
         index=b2.index;
         return *this;
     }
-
+    bool bitvec::operator==(const bitvec& bv){
+       if(blocks == bv.blocks){
+            for(int i = 0; i < blocks; ++i){
+                if(bb[i] != bv.bb[i])
+                    return false;
+            }
+            return true;
+       }else
+          return false; 
+    }
     bool bitvec :: getbegin(){
        return query_bit(0);
     }

@@ -65,12 +65,27 @@ class BasicBlock{
             kill[i] = 1;
         }   
     }
+void setIn(bitvec& bv){
+       in = bv;  
+    }
+void setOut(bitvec& bv){
+       out = bv;  
+    }
+
+
     bitvec getGen(){
        return gen;
     }
    bitvec getKill(){
       return kill;
    } 
+   bitvec getIn(){
+       return in;
+    }
+   bitvec getOut(){
+      return out;
+   } 
+
     void bitResize(int size){
         in.resize(size);
         out.resize(size);

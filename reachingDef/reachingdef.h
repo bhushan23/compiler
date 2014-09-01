@@ -31,5 +31,8 @@ class ReachingDefAna{
     void ComputeGenKill();
     void printProgram();
     void printBitSet(bitvec&);
+    void printBitSet(string&,bitvec&);
+    void ComputeINOUT();
+    void printBB(BasicBlock*);
 };
 

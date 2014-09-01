@@ -25,7 +25,9 @@
             bitvec operator|(const bitvec&);
             bitvec operator^(const bitvec&);
             bitvec& operator=(const bitvec&);
+            bitvec operator-(const bitvec&);
             bool& operator[](int);
+            bool operator==(const bitvec&);
             //for iterator
             bool getbegin();
             bool getend();
@@ -37,5 +39,11 @@
             int getSize(){
                 return blocks;
             }
+            void set(){
+                for(int i = 0;i < blocks; ++i)
+                    bb[i] = 1;
+                index = blocks;
+            }
+
     };
 #endif
