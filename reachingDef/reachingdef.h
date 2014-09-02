@@ -9,8 +9,8 @@ using namespace std;
 class ReachingDefAna{
     Program* pr;
     map< operand*,list<instruction*> > dIList;
-   map< instruction* , int > instBitTable;
-   map<int, instruction*> bitInstTable;
+    map< instruction* , int > instBitTable;
+    map<int, instruction*> bitInstTable;
     map <operand*,vector<int> > DestTable;
     public:
     void ComputeDestInstList();

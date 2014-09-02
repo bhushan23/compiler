@@ -8,7 +8,7 @@
 using namespace std;
 int opcode_par_cnt[]={1,1,1,2,2,2,2,1,3,3,3};
 operand :: operand(operandtype otype,string t){//for symbol and register
-    
+
     if(otype==reg){//register
         type=reg;
         value=t[1]-48; //Need to change code for index having more than 9
@@ -106,13 +106,15 @@ instruction :: instruction(opcodeenum opcode,operand* dest,operand* src1,operand
     label = lab;
     source.push_back(src1);
     source.push_back(src2);
-}/*
-instruction* instruction::createInstruction(opcodeenum opcode,operand* dest,operand* src1,operand* src2){
+}
+
+/*
+    instruction* instruction::createInstruction(opcodeenum opcode,operand* dest,operand* src1,operand* src2){
     opcodeno=opcode;
     destination=dest;
     source.push_back(src1);
     source.push_back(src2);
-}*/
+    }*/
 
 void instruction :: print_instruction(){
     //if(label.length() > 0)
@@ -129,10 +131,10 @@ void instruction :: print_instruction(ofstream& ost){
     //if(label.length() > 0)
     //cout << label << ": ";
     ost<<opcode_table_getinst(opcodeno)<<" ";
-    destination->print_opcode();
+    destination->print_opcode(ost);
 
     for(int i=0,size = source.size(); i < size;i++){
-        cout<<" ";
+        ost<<" ";
         source[i]->print_opcode(ost);
     }
 }
@@ -175,12 +177,12 @@ bool instruction :: check_src_operand_correctness(opcodeenum opcode,int src){
     return false;
 }
 string instruction::getLabelFromOperand(){
-string opLabel;
+    string opLabel;
     switch(opcodeno){
         case jmp:
             //if(destination.get_operandtype() == oplabel){//Xcheck if operand is LabelType
-                opLabel = destination->getvalLabel();
-           // }
+            opLabel = destination->getvalLabel();
+            // }
             break;
         case jmpe:
         case jmpne:
@@ -191,7 +193,7 @@ string opLabel;
         default:
             opLabel = "";
             break;
-   }
-return opLabel;
+    }
+    return opLabel;
 }
 

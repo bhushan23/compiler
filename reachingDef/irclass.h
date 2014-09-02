@@ -9,7 +9,7 @@
 #include "basicblock.h"
 using namespace std;
 enum operandtype{reg=0,sym,con,oplabel};
-enum opcodeenum {ld=0,st,mov,add,mul,div,sub,jmp,jmpe,jmpne,jmpge};
+enum opcodeenum {ld=0,st,mov,add,mul,bdiv,sub,jmp,jmpe,jmpne,jmpge};
 class operand{
     operandtype type;
     int value;

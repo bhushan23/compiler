@@ -5,7 +5,7 @@ using namespace std;
 
 #define TOTAL_OPCODE 11
 
-string opcode_table_arr[]={"ld","st","mov","add","mul","div","sub","jmp","jmpe","jmpne","jmpge"};
+string opcode_table_arr[]={"ld","st","mov","add","mul","bdiv","sub","jmp","jmpe","jmpne","jmpge"};
 vector<string> symbol_table;
 
 string opcode_table_getinst(int index){

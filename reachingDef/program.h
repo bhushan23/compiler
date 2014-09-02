@@ -3,18 +3,18 @@
 #include "basicblock.h"
 #include "irclass.h"
 class Program{
-        list<BasicBlock*> basicBlock;
-        map<string,BasicBlock*> mapBB;
+    list<BasicBlock*> basicBlock;
+    map<string,BasicBlock*> mapBB;
     public:
-         list <BasicBlock*>::iterator get_begin();
-         list <BasicBlock*>::iterator get_end();
+    list <BasicBlock*>::iterator get_begin();
+    list <BasicBlock*>::iterator get_end();
     void print_program();
     void create_dot_file();
-         void addNewBb(BasicBlock* bb);
+    void addNewBb(BasicBlock* bb);
     Program(){
 
     }
-        Program(BasicBlock* bb){
+    Program(BasicBlock* bb){
         basicBlock.push_back(bb);
     }
     BasicBlock* GetBasicBlockFromLabel(string&);    

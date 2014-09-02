@@ -41,6 +41,14 @@ void Program::add_instruction(instruction* inst,BasicBlock* bb){
         BasicBlock* bB = GetBasicBlockFromLabel(label);    
         bB->add_instruction(inst);
         bB->setBBLabel(label);
+        label = inst->getLabelFromOperand(); 
+        if( label.length() > 0 ){//Creates edge b/w 2 BB
+            //cout<<"creating new BB";
+            BasicBlock* nBB = GetBasicBlockFromLabel(label);        
+            //add Pred Succ Info
+            bB->pushSucc(nBB);
+            nBB->pushPred(bB);
+        } 
     }else{
         // cout<<"\n  No label \n";
         label = inst->getLabelFromOperand(); 
@@ -49,7 +57,7 @@ void Program::add_instruction(instruction* inst,BasicBlock* bb){
             BasicBlock* nBB = GetBasicBlockFromLabel(label);        
             //add Pred Succ Info
             bb->pushSucc(nBB);
-            nBB->pushPred(nBB);
+            nBB->pushPred(bb);
         } 
         bb->add_instruction(inst);
 

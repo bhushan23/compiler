@@ -8,8 +8,6 @@ using namespace std;
 
 int main(){
     BasicBlock* entryBB = new BasicBlock();
-    //operand *op[5],*oplab[5];
-    //instruction ir[6];
     Program* program= new Program();
 
     operand* op0= new operand(reg,"r0");
@@ -34,23 +32,12 @@ int main(){
     program->add_instruction(irs2,irs1a);
     program->add_instruction(irs3,irs2); 
     program->add_instruction(irs4,irs3);
-    // (irs5->getParent())->add_instruction(irj);
     program->add_instruction(irs5,irs4);
     program->add_instruction(irs6,irs5);
     program->add_instruction(irj,irs6);
     program->add_instruction(irj1,irj);
     irs4->set_opcodeno(sub);
-    /*
-       instruction& irs5 = program->add_instruction(instruction(ld,op[0],op[3]));
-       instruction& irs1 = program->add_instruction(instruction(ld,op[1],op[4]));
-       instruction& irs3 = program->add_instruction(instruction(add,op[2],op[1],op[0]));
-       instruction& irs6 = program->add_instruction(instruction(st,op[3],op[2]));
-       */
-    // entryBB->print_instruction();
     irs6->set_opcodeno(ld);
-    //entryBB->print_instruction();
-
-//    program->print_program();
     ReachingDefAna* ra = new ReachingDefAna(program);
     return 0;
 }

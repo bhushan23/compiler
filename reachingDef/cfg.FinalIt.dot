@@ -1,8 +1,0 @@
-digraph "CFG for FinalIt' function" {
- label="CFG for ";
-
-Node0x1b9b8f0 [shape=record,label="{\lIN: |{OUT: mov 5 ,ld A ,mov r0 ,}|{GEN: mov 5 ,ld A ,mov r0 ,}|{KILL: mov 5 ,sub r1 ,add r0r1 ,add r1 ,ld A ,mov r0 ,}|{\lmov 5\lld A\lmov r0\ljmpe r1label BB1}}"];
-Node0x1b9b8f0 -> Node0x1b9bad0;
-Node0x1b9bad0 [shape=record,label="{\lIN: add r0r1 ,ld r0 ,|{OUT: add r0r1 ,ld r0 ,}|{GEN: add r0r1 ,ld r0 ,}|{KILL: mov 5 ,sub r1 ,add r0r1 ,add r1 ,ld r0 ,}|{\lsub r1\ladd r0r1\lld r0\ljmp }}"];
-Node0x1b9bad0 -> Node0x1b9bd10;
-Node0x1b9bd10 [shape=record,label="{\lIN: add r1 ,|{OUT: add r1 ,}|{GEN: add r1 ,}|{KILL: mov 5 ,sub r1 ,add r0r1 ,add r1 ,}|{\ladd r1}}"];}
