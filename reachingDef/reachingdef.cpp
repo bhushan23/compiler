@@ -92,8 +92,8 @@ void ReachingDefAna::ComputeINOUT(){
                 cBB->setOut(tout);
             }
             printBB(cBB);
-            ts.append("1");
-         }
+        } 
+    ts.append("1");
    createDotFile(ts);
         
     }while(changed);
@@ -158,19 +158,19 @@ void ReachingDefAna::printBB(BasicBlock* it){
 
 }
 void ReachingDefAna::printBB(BasicBlock* it,ofstream& cout){
-    cout<<"\\lIN:{ ";
+    cout<<"IN: ";
     bitvec in = it->getIn();
     printBitSet(in,cout);
-    cout<<"\\lOUT:{ ";
+    cout<<"|{OUT: ";
     bitvec out =  it->getOut();
     printBitSet(out,cout);
     bitvec gen = it->getGen();
     bitvec kill = it->getKill(); 
-    cout<<"\\lGEN:{ ";
+    cout<<"}|{GEN: ";
     printBitSet(gen,cout);
-    cout<<" }\\lKILL:{ ";
+    cout<<"}|{KILL: ";
     printBitSet(kill,cout);  
-    cout<<" }\\l"; 
+    cout<<"}|{"; 
 
 }
 
@@ -192,7 +192,7 @@ void ReachingDefAna::createDotFile(string& name){
             (*instit)->print_instruction(ost);
 
         }
-       ost << "}\"];";
+       ost << "}}\"];";
             for (list<BasicBlock*>::iterator SI = BB->get_begin_succ(), E = BB->get_end_succ(); SI != E;  ++SI) {
                 succN = *SI;
                 ost << "\n";

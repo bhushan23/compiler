@@ -1,2 +1,1 @@
-g++ client.cpp irclass.cpp  table.cpp program.cpp basicblock.cpp reachingdef.cpp -o c
-./c
+clear && clang++ client.cpp irclass.cpp  table.cpp program.cpp basicblock.cpp reachingdef.cpp bitbool.cpp -o c1 && ./c1
