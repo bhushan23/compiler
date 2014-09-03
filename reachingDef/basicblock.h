@@ -65,39 +65,39 @@ class BasicBlock{
             kill[i] = 1;
         }   
     }
-void setIn(bitvec& bv){
-       in = bv;  
+    void setIn(bitvec& bv){
+        in = bv;  
     }
-void setOut(bitvec& bv){
-       out = bv;  
+    void setOut(bitvec& bv){
+        out = bv;  
     }
 
 
     bitvec getGen(){
-       return gen;
+        return gen;
     }
-   bitvec getKill(){
-      return kill;
-   } 
-   bitvec getIn(){
-       return in;
+    bitvec getKill(){
+        return kill;
+    } 
+    bitvec getIn(){
+        return in;
     }
-   bitvec getOut(){
-      return out;
-   } 
+    bitvec getOut(){
+        return out;
+    } 
 
     void bitResize(int size){
         in.resize(size);
         out.resize(size);
         gen.resize(size);
         kill.resize(size);
-   }
+    }
     void initBitToZero(int size){
         for(int i = 0; i < size; ++i){
             in[i] = 0;
-            out[i] =0;
+            out[i] = 0;
             gen[i] = 0;
-            kill[i] =0;
+            kill[i] = 0;
         }
     }
 };

@@ -213,6 +213,12 @@ bitvec bitvec :: operator-(const bitvec& b2){
        }else
           return false; 
     }
+    bool bitvec::operator!=(const bitvec& bv){
+        if(*this == bv){
+            return false;
+        }
+        return true;
+    }
     bool bitvec :: getbegin(){
        return query_bit(0);
     }

@@ -50,6 +50,8 @@ int main(){
     cout<<"INPUT PROGRAM\n";
     program->print_program();
     cout<<"Reaching Def Analysis \n";
-    ReachingDefAna* ra = new ReachingDefAna(program);
+    ReachingDefAna* ra = new ReachingDefAna(program,0);
+    ReachingDefAna* ra1 = new ReachingDefAna(program,1);
+    
     return 0;
 }

@@ -213,3 +213,166 @@ n5-------Predecessor: n3 n4 ; Successor n4 ;
 add c a b
 jmp label n4
 
+##Initialization
+
+IN:{ 
+OUT:{ 
+GEN:{  }
+KILL:{  }
+-------Predecessor: ; Successor n2 ;
+jmp label n2
+
+
+IN:{ 
+OUT:{ 
+GEN:{  }
+KILL:{  }
+n2-------Predecessor:  n4 ; Successor n3 n4 ;
+add c a b
+jmpe a b label n3
+jmp label n4
+
+
+IN:{ 
+OUT:{ 
+GEN:{  }
+KILL:{  }
+n3-------Predecessor: n2 ; Successor n4 n5 ;
+add d b c
+jmpe d b label n4
+jmp label n5
+
+
+IN:{ 
+OUT:{ 
+GEN:{  }
+KILL:{  }
+n4-------Predecessor: n2 n3 n5 ; Successor n2 n5 ;
+jmpe d b label n2
+jmp label n5
+
+
+IN:{ 
+OUT:{ 
+GEN:{  }
+KILL:{  }
+n5-------Predecessor: n3 n4 ; Successor n4 ;
+add c a b
+jmp label n4
+
+
+ Using Wt. List Algorithm 
+
+::VISITING  ::
+
+IN:{ 
+OUT:{ 
+GEN:{  }
+KILL:{  }
+-------Predecessor: ; Successor n2 ;
+jmp label n2
+
+
+::VISITING n2 ::
+
+IN:{ 
+OUT:{ add c a b ,
+GEN:{ add c a b , }
+KILL:{ add c a b ,add c a b , }
+n2-------Predecessor:  n4 ; Successor n3 n4 ;
+add c a b
+jmpe a b label n3
+jmp label n4
+
+
+::VISITING n3 ::
+
+IN:{ add c a b ,
+OUT:{ add c a b ,add d b c ,
+GEN:{ add d b c , }
+KILL:{ add d b c , }
+n3-------Predecessor: n2 ; Successor n4 n5 ;
+add d b c
+jmpe d b label n4
+jmp label n5
+
+
+::VISITING n4 ::
+
+IN:{ add c a b ,add d b c ,
+OUT:{ add c a b ,add d b c ,
+GEN:{  }
+KILL:{  }
+n4-------Predecessor: n2 n3 n5 ; Successor n2 n5 ;
+jmpe d b label n2
+jmp label n5
+
+
+::VISITING n5 ::
+
+IN:{ add c a b ,add d b c ,
+OUT:{ add c a b ,add d b c ,
+GEN:{ add c a b , }
+KILL:{ add c a b ,add c a b , }
+n5-------Predecessor: n3 n4 ; Successor n4 ;
+add c a b
+jmp label n4
+
+
+::VISITING n2 ::
+
+IN:{ add c a b ,add d b c ,
+OUT:{ add c a b ,add d b c ,
+GEN:{ add c a b , }
+KILL:{ add c a b ,add c a b , }
+n2-------Predecessor:  n4 ; Successor n3 n4 ;
+add c a b
+jmpe a b label n3
+jmp label n4
+
+
+::VISITING n4 ::
+
+IN:{ add c a b ,add c a b ,add d b c ,
+OUT:{ add c a b ,add c a b ,add d b c ,
+GEN:{  }
+KILL:{  }
+n4-------Predecessor: n2 n3 n5 ; Successor n2 n5 ;
+jmpe d b label n2
+jmp label n5
+
+
+::VISITING n3 ::
+
+IN:{ add c a b ,add d b c ,
+OUT:{ add c a b ,add d b c ,
+GEN:{ add d b c , }
+KILL:{ add d b c , }
+n3-------Predecessor: n2 ; Successor n4 n5 ;
+add d b c
+jmpe d b label n4
+jmp label n5
+
+
+::VISITING n2 ::
+
+IN:{ add c a b ,add c a b ,add d b c ,
+OUT:{ add c a b ,add d b c ,
+GEN:{ add c a b , }
+KILL:{ add c a b ,add c a b , }
+n2-------Predecessor:  n4 ; Successor n3 n4 ;
+add c a b
+jmpe a b label n3
+jmp label n4
+
+
+::VISITING n5 ::
+
+IN:{ add c a b ,add c a b ,add d b c ,
+OUT:{ add c a b ,add d b c ,
+GEN:{ add c a b , }
+KILL:{ add c a b ,add c a b , }
+n5-------Predecessor: n3 n4 ; Successor n4 ;
+add c a b
+jmp label n4
+

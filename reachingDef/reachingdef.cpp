@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include <fstream>
 void ReachingDefAna::ComputeDestInstList(){
+
     for( list<BasicBlock*>::iterator it = pr->get_begin(), end = pr->get_end(); it != end; ++it){
         for( list<instruction*>::iterator instIt = (*it)->get_begin_inst(), instEnd = (*it)->get_end_inst(); instIt != instEnd; ++instIt){
             if( isDefInst((*instIt)->get_opcodeno())){
@@ -49,7 +50,7 @@ void ReachingDefAna::ComputeGenKill(){
         }
     }
 }
-void ReachingDefAna::ComputeINOUT(){
+void ReachingDefAna::ComputeINOUTIterative(){
     BasicBlock* entry = *pr->get_begin();
     bool changed = true;
     int i = 0;
@@ -74,7 +75,7 @@ void ReachingDefAna::ComputeINOUT(){
             bitvec tin(in.getSize()); 
             bitvec tout(out.getSize());
             for(list<BasicBlock*>::iterator pit = cBB->get_begin_pred(), pend = cBB->get_end_pred(); pit != pend; ++pit){
-               tin = tin | (*pit)->getOut();
+                tin = tin | (*pit)->getOut();
             }
             tout = tin - cBB->getKill();
             tout = tout | cBB->getGen();
@@ -94,11 +95,56 @@ void ReachingDefAna::ComputeINOUT(){
     }while(changed);
 
 }
-void ReachingDefAna::startReachingDefAna(){
+void ReachingDefAna::ComputeINOUTWtList(){
+    map <BasicBlock*,bool> visitedFlag;
+    queue <BasicBlock*> toVisit;    
+    for( list<BasicBlock*>::iterator it = pr->get_begin(), end = pr->get_end(); it != end; ++it){
+        toVisit.push(*it);
+        visitedFlag[*it] = true;
+    }
+    while( !toVisit.empty() ){
+        BasicBlock* cBB = toVisit.front();
+        cout << "\n::VISITING " << cBB->getBBLabel() << " ::\n";
+        toVisit.pop();
+        visitedFlag[cBB] = false;
+        bitvec in = cBB->getIn();
+        bitvec out = cBB->getOut();
+        bitvec tin(in.getSize()); 
+        bitvec tout(out.getSize());
+        for(list<BasicBlock*>::iterator pit = cBB->get_begin_pred(), pend = cBB->get_end_pred(); pit != pend; ++pit){
+            tin = tin | (*pit)->getOut();
+        }
+        tout = tin - cBB->getKill();
+        tout = tout | cBB->getGen();
+        cBB->setIn(tin);
+        if( out != tout ){
+            cBB->setOut(tout);
+            for(list<BasicBlock*>::iterator it = cBB->get_begin_succ(), end = cBB->get_end_succ(); it != end; ++it){
+                if(visitedFlag[*it] == false){
+                    visitedFlag[*it] = true;
+                    toVisit.push(*it);
+                }
+            }
+        }
+        printBB(cBB);
+    }
+    string ts("ReachingDefWtList");
+    createDotFile(ts);
+}
+
+void ReachingDefAna::ReachingDefAnaIterative(){
     ComputeDestInstList();
     ComputeGenKill();
-    ComputeINOUT();
+    ComputeINOUTIterative();
 }
+
+void ReachingDefAna::ReachingDefAnaWtList(){
+    ComputeDestInstList();
+    ComputeGenKill();
+    cout << "\n Using Wt. List Algorithm \n";
+    ComputeINOUTWtList();
+}
+
 void ReachingDefAna::printBitSet(bitvec& bv){
     for(int i = 0; i < bv.getSize(); ++i){
         if(bv[i] == 1){

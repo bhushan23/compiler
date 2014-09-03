@@ -28,7 +28,9 @@
             bitvec operator-(const bitvec&);
             bool& operator[](int);
             bool operator==(const bitvec&);
+            bool operator!=(const bitvec&);
             //for iterator
+            
             bool getbegin();
             bool getend();
             int itbegin();

@@ -1,5 +1,5 @@
-digraph "CFG for Iteration3' function" {
- label="CFG for Iteration3";
+digraph "CFG for ReachingDefWtList' function" {
+ label="CFG for ReachingDefWtList";
 
 Node0x181d220 [shape=record,label="{ Node::  IN: |{OUT: }|{GEN: }|{KILL: }|{\ljmp label n2}}"];
 Node0x181d220 -> Node0x181dac0;
